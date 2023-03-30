@@ -58,8 +58,9 @@ void AESLib::gen_iv(byte  *iv) {
 String AESLib::encrypt(String msg, byte key[], byte my_iv[]) {
   char b64data[200];
   byte cipher[1000];
-    
-  aes.set_key( key , sizeof(key));
+  size_t keylen = sizeof(key) / sizeof(key[0]);
+
+  aes.set_key( key , (int)keylen);
   base64_encode(b64data, (char *)my_iv, N_BLOCK);
   int b64len = base64_encode(b64data, (char *)msg.c_str(),msg.length());
   // Encrypt! With AES128, our key and IV, CBC and pkcs7 padding    
